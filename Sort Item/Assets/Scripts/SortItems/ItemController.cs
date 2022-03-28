@@ -10,9 +10,11 @@ public class ItemController : MonoBehaviour
     private Vector3 _startPos;
     private Vector3 _mOffset;
     private float _mZCoord;
-    [SerializeField] private ParticleSystem _smallWin;
-    [SerializeField] private float _scaleBoost = 1.1f;
     private PointController currentPoint;
+
+    public List<ItemSkin> Skins = new List<ItemSkin>();
+    [SerializeField] private ParticleSystem _smallWin;
+    [SerializeField] private float _scaleBoost = 1.2f;
 
     private void Start()
     {
@@ -60,6 +62,7 @@ public class ItemController : MonoBehaviour
         if (IsInShelf)
             return;
 
+        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
         TakePlace();
     }
 
@@ -166,16 +169,14 @@ public class ItemController : MonoBehaviour
 
     private IEnumerator ChangeScale(float booster)
     {
-        float time = 0.1f;
-        Vector3 startScale = transform.localScale;
+        float time = 0.25f;
+        Vector3 startScale = Vector3.one;
 
         for (float t = 0; t < 1; t += Time.deltaTime / time)
         {
             transform.localScale = Vector3.Lerp(startScale, startScale * booster, t);
             yield return null;
         }
-
-        yield return new WaitForSeconds(0.1f);
 
         for (float t = 0; t < 1; t += Time.deltaTime / time)
         {

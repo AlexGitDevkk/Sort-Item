@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShelfController : MonoBehaviour
 {
+    [Header("Choose Skin")]
+    [SerializeField] private int _skinIndex;
+    [SerializeField] private List<GameObject> _skins = new List<GameObject>();
     [Header("Count Items in:")]
     public int Rows = 0;
     public int Column = 0;
@@ -28,6 +31,8 @@ public class ShelfController : MonoBehaviour
 
     private void Start()
     {
+        ActivateSkin();
+
         Vector3 position = Vector3.zero;
         for (int i = 0; i < Column; i++)
         {
@@ -43,9 +48,21 @@ public class ShelfController : MonoBehaviour
         }
     }
 
+    private void ActivateSkin()
+    {
+        for (int j = 0; j < _skins.Count; j++)
+        {
+            if (j == _skinIndex)
+                _skins[j].gameObject.SetActive(true);
+            else
+                _skins[j].gameObject.SetActive(false);
+        }
+    }
+
     public void WinPartPlay()
     {
         _winParticle.Play();
+
     }
 
 }

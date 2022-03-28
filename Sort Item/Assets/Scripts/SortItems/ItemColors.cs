@@ -6,6 +6,8 @@ public class ItemColors : MonoBehaviour
 {
     [Header("For Index")]
     [SerializeField] private int _rowIndex;
+    [Header("Choose Skin")]
+    [SerializeField] private int _skinIndex;
     [Header("Do color by: ")]
     [SerializeField] private Gradient _gradient;
     [SerializeField] private List<GameObject> _items = new List<GameObject>();
@@ -21,10 +23,20 @@ public class ItemColors : MonoBehaviour
         for (int i = 0; i < _items.Count; i++)
         {
             colorPercent = (float)i / (float)_items.Count;
-            _items[i].GetComponent<ItemController>().GetComponent<ItemController>().RowIndex = _rowIndex;
-            _items[i].GetComponent<ItemController>().GetComponent<ItemController>().ColumnIndex = i;
-            _items[i].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = _gradient.Evaluate(colorPercent);
-            _items[i].transform.GetChild(0).GetChild(3).GetComponent<Renderer>().material.color = _gradient.Evaluate(colorPercent);
-        }       
+            var _item = _items[i].GetComponent<ItemController>();
+
+            _item.RowIndex = _rowIndex;
+            _item.ColumnIndex = i;
+
+            for (int j = 0; j < _item.Skins.Count; j++)
+            {
+                if (j == _skinIndex)
+                    _item.Skins[j].gameObject.SetActive(true);
+                else
+                    _item.Skins[j].gameObject.SetActive(false);
+            }
+
+            _item.Skins[_skinIndex].GetComponent<ItemSkin>().ChangeColors(_gradient.Evaluate(colorPercent));
+        }
     }
 }
