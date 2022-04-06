@@ -5,4 +5,4 @@ Developer:
 - **Vadym Korolov**
 
 Art:
-- **Alexander Hrubyi**
+- **Alexander Hrubiy**
